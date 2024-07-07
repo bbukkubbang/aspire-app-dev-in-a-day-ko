@@ -27,20 +27,20 @@ jobs:
       AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
       AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
       AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4
 
-      -name: Install .NET 8 SDK
+    - name: Install .NET 8 SDK
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.x
+      dotnet-version: 8.x
 
-      - name: Install .NET Aspire workload
-        run: dotnet workload install aspire
+    - name: Install .NET Aspire workload
+      run: dotnet workload install aspire
 
-      - name: Update appsettings.json
-        shell: pwsh
+    - name: Update appsettings.json
+      shell: pwsh
         run: |
           pushd ./workshop
           $appsettings = Get-Content -Path ./AspireYouTubeSummariser.AppHost/appsettings.json | ConvertFrom-Json
