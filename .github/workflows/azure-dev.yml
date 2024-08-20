@@ -6,10 +6,9 @@ on:
     branches:
       - main
       - master
-    # 아래 두 줄 추가 👇
+
     paths:
-      - "workshop/**/*"
-    # 위 두 줄 추가 👆
+      - 'workshop/**/*'
 
 # GitHub Actions workflow to deploy to Azure using azd
 # To configure required secrets for connecting to Azure, simply run `azd pipeline config`
@@ -33,15 +32,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 아래 액션 추가 👇
       - name: Install .NET 8 SDK
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.x
-
+      
       - name: Install .NET Aspire workload
         run: dotnet workload install aspire
-
+      
       - name: Update appsettings.json
         shell: pwsh
         run: |
@@ -52,7 +50,7 @@ jobs:
           $appsettings.OpenAI.DeploymentName = "${{ secrets.AZURE_OPENAI_DEPLOYMENT_NAME }}"
           $appsettings | ConvertTo-Json -Depth 100 | Out-File -FilePath ./AspireYouTubeSummariser.AppHost/appsettings.json -Encoding utf8 -Force
           popd
-      # 위 액션 추가 👆
+
       - name: Install azd
         uses: Azure/setup-azd@v1.0.0
 
@@ -79,7 +77,6 @@ jobs:
         env:
           AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # 변경후99
       - name: Provision Infrastructure
         run: |
           pushd ./workshop
@@ -88,7 +85,6 @@ jobs:
 
       - name: Deploy Application
         run: |
-          pushd ./workshop 
-          azd deploy —no-prompt
+          pushd ./workshop
+          azd deploy --no-prompt
           popd
-
