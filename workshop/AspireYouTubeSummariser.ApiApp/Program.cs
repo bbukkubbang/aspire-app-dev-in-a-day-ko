@@ -11,6 +11,7 @@ using OpenAI.Chat;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 builder.AddServiceDefaults();
 
 builder.Services.AddHttpClient<IYouTubeVideo, YouTubeVideo>();
